@@ -1,0 +1,90 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "a6f474d7969793c876a0",
+  "position": {
+    "x": 738.72,
+    "y": 106.56,
+    "z": 6000,
+    "height": 295.2,
+    "width": 516.96,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "lineStackedColumnComboChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "product_category_name_translation"
+                    }
+                  },
+                  "Property": "product_category_name_english"
+                }
+              },
+              "queryRef": "product_category_name_translation.product_category_name_english",
+              "nativeQueryRef": "product_category_name_english",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "CalMeasures"
+                    }
+                  },
+                  "Property": "Late Deliveries"
+                }
+              },
+              "queryRef": "CalMeasures.Late Deliveries",
+              "nativeQueryRef": "Late Deliveries"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "CalMeasures"
+                  }
+                },
+                "Property": "Late Deliveries"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Late Deliveries for each category'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

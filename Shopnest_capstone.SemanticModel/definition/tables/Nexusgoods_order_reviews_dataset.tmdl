@@ -1,0 +1,72 @@
+table Nexusgoods_order_reviews_dataset
+	lineageTag: 63b513cb-6091-4ebf-851a-ff32dc02c08e
+
+	column review_id
+		dataType: string
+		lineageTag: 6063f270-2a9d-495e-84ba-68f8433c76b0
+		summarizeBy: none
+		sourceColumn: review_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 29ca2aa6-4109-4652-8bce-889d21c66af7
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_score
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f07e6de-122c-492c-8153-83eb223f52b0
+		summarizeBy: sum
+		sourceColumn: review_score
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_comment_title
+		dataType: string
+		lineageTag: bc4505ed-ad1a-45d9-b255-b061a36562f9
+		summarizeBy: none
+		sourceColumn: review_comment_title
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_comment_message
+		dataType: string
+		lineageTag: 39f9c78c-5879-4afd-8a24-66f4ef650a3e
+		summarizeBy: none
+		sourceColumn: review_comment_message
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_creation_date
+		dataType: string
+		lineageTag: 3581cf62-f36f-47f9-9407-bb3c3b0b74f4
+		summarizeBy: none
+		sourceColumn: review_creation_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_answer_timestamp
+		dataType: string
+		lineageTag: 9250261e-65cd-48f0-b889-aefb3decb8a1
+		summarizeBy: none
+		sourceColumn: review_answer_timestamp
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Nexusgoods_order_reviews_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Irfan\Desktop\Shahida\Nexusgoods store capstone\Nexusgoods_order_reviews_dataset.csv"),[Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"review_id", type text}, {"order_id", type text}, {"review_score", Int64.Type}, {"review_comment_title", type text}, {"review_comment_message", type text}, {"review_creation_date", type text}, {"review_answer_timestamp", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

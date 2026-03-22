@@ -1,0 +1,31 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Nexusgood_geolocation_dataset","Nexusgoods_customers_dataset","Nexusgoods_order_items_dataset","Nexusgoods_order_payments_dataset","Nexusgoods_order_reviews_dataset","Nexusgoods_orders_dataset (1)","Nexusgoods_products_dataset","Nexusgoods_sellers_dataset","product_category_name_translation"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Nexusgood_geolocation_dataset
+ref table Nexusgoods_customers_dataset
+ref table Nexusgoods_order_items_dataset
+ref table Nexusgoods_order_payments_dataset
+ref table Nexusgoods_order_reviews_dataset
+ref table 'Nexusgoods_orders_dataset (1)'
+ref table Nexusgoods_products_dataset
+ref table Nexusgoods_sellers_dataset
+ref table product_category_name_translation
+ref table CalMeasures
+ref table DateTableTemplate_1d75dd5b-da17-44a3-a18a-13f576647b5d
+ref table LocalDateTable_8e81798b-a074-4287-a691-796a52527110
+ref table LocalDateTable_f145300a-43e9-4cb6-9118-c99b3f23974d
+ref table LocalDateTable_ec9ffb99-ea83-482e-be8b-61a23c5dc59a
+
+ref cultureInfo en-US
+

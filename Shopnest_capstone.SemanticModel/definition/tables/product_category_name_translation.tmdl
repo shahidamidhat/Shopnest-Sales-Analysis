@@ -1,0 +1,31 @@
+table product_category_name_translation
+	lineageTag: 7802b101-6566-4434-9f4d-eeb8e913a837
+
+	column product_category_name
+		dataType: string
+		lineageTag: 4c64a8ef-f9eb-4d71-afdc-e4d37246402d
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name_english
+		dataType: string
+		lineageTag: 830df534-4ebc-4719-98ba-261dc39b190c
+		summarizeBy: none
+		sourceColumn: product_category_name_english
+
+		annotation SummarizationSetBy = Automatic
+
+	partition product_category_name_translation = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Irfan\Desktop\Shahida\Nexusgoods store capstone\product_category_name_translation.csv"),[Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Column1", "product_category_name"}, {"Column2", "product_category_name_english"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+

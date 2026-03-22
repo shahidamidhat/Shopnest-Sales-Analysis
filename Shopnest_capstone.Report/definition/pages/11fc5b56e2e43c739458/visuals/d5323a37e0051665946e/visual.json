@@ -1,0 +1,85 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "d5323a37e0051665946e",
+  "position": {
+    "x": 470.88,
+    "y": 109.44,
+    "z": 1000,
+    "height": 191.52,
+    "width": 516.96,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Nexusgoods_order_payments_dataset"
+                    }
+                  },
+                  "Property": "payment_type"
+                }
+              },
+              "queryRef": "Nexusgoods_order_payments_dataset.payment_type",
+              "nativeQueryRef": "payment_type",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Nexusgoods_order_payments_dataset"
+                        }
+                      },
+                      "Property": "payment_type"
+                    }
+                  },
+                  "Function": 5
+                }
+              },
+              "queryRef": "CountNonNull(Nexusgoods_order_payments_dataset.payment_type)",
+              "nativeQueryRef": "Count of payment_type"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "Nexusgoods_order_payments_dataset"
+                      }
+                    },
+                    "Property": "payment_type"
+                  }
+                },
+                "Function": 5
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

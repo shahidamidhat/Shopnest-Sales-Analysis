@@ -1,0 +1,145 @@
+table 'Nexusgoods_orders_dataset (1)'
+	lineageTag: 24e4e553-36b1-4631-b1d3-4ce180e4e0ac
+
+	column if_late_delivery = IF('Nexusgoods_orders_dataset (1)'[order_delivered_customer_date]>'Nexusgoods_orders_dataset (1)'[order_estimated_delivery_date], "Yes", "No")
+		lineageTag: 6fe2e2e0-6bc0-4526-80d3-c76b8d1a05fa
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_month
+		type: calculated
+		lineageTag: 968a2c27-0258-44f8-a291-27a3ceb8cdaa
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 80d54f70-8c73-4694-8f40-f95b46691d20
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		lineageTag: 08d5209f-c62d-4003-905a-69e0bc3b98da
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: c4ab217b-26d0-4cbe-8d19-fff98bca2572
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_purchase_timestamp
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: dbf980f1-5b0d-45d4-922e-5cc2864be528
+		summarizeBy: none
+		sourceColumn: order_purchase_timestamp
+
+		variation Variation
+			isDefault
+			relationship: 5ccbda63-b5a1-491d-bedb-1c8ec120b6e5
+			defaultHierarchy: LocalDateTable_8e81798b-a074-4287-a691-796a52527110.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_approved_at
+		dataType: string
+		lineageTag: 197c5d94-fdd5-4968-b588-58ece6fdf9d4
+		summarizeBy: none
+		sourceColumn: order_approved_at
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_carrier_date
+		dataType: string
+		lineageTag: f78fff46-2e00-4d7f-bbe0-337c3dcfd5ed
+		summarizeBy: none
+		sourceColumn: order_delivered_carrier_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_delivered_customer_date
+		dataType: string
+		lineageTag: 51a068bf-a943-4b21-835b-bbacf6f2df78
+		summarizeBy: none
+		sourceColumn: order_delivered_customer_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_estimated_delivery_date
+		dataType: string
+		lineageTag: 96f8e9d3-2ab2-4d06-9dee-cdce6eafa260
+		summarizeBy: none
+		sourceColumn: order_estimated_delivery_date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'End of Month'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: abf19702-539e-4fa5-8db6-c329649867b9
+		summarizeBy: none
+		sourceColumn: End of Month
+
+		variation Variation
+			isDefault
+			relationship: 9007cbca-4081-4698-a874-9da4145d7464
+			defaultHierarchy: LocalDateTable_f145300a-43e9-4cb6-9118-c99b3f23974d.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e54f6b97-90bf-418d-b46f-3ef26dbeb08f
+		summarizeBy: none
+		sourceColumn: Date
+
+		variation Variation
+			isDefault
+			relationship: 03cba4a5-9eed-4ca7-bebe-d2b15400645f
+			defaultHierarchy: LocalDateTable_ec9ffb99-ea83-482e-be8b-61a23c5dc59a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a1caadc-008e-441c-bae9-9c507ec4322a
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Nexusgoods_orders_dataset (1)' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Irfan\Desktop\Shahida\Nexusgoods store capstone\Nexusgoods_orders_dataset (1).csv"),[Delimiter=",", Columns=8, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Column1", "order_id"}, {"Column2", "customer_id"}, {"Column3", "order_status"}, {"Column4", "order_purchase_timestamp"}, {"Column5", "order_approved_at"}, {"Column6", "order_delivered_carrier_date"}, {"Column7", "order_delivered_customer_date"}, {"Column8", "order_estimated_delivery_date"}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Renamed Columns", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"order_id", type text}, {"customer_id", type text}, {"order_status", type text}, {"order_purchase_timestamp", type text}, {"order_approved_at", type text}, {"order_delivered_carrier_date", type text}, {"order_delivered_customer_date", type text}, {"order_estimated_delivery_date", type text}}),
+				    #"Changed Type with Locale" = Table.TransformColumnTypes(#"Changed Type1", {{"order_purchase_timestamp", type datetime}}, "en-IN"),
+				    #"Inserted End of Month" = Table.AddColumn(#"Changed Type with Locale", "End of Month", each Date.EndOfMonth([order_purchase_timestamp]), type datetime),
+				    #"Inserted Date" = Table.AddColumn(#"Inserted End of Month", "Date", each DateTime.Date([End of Month]), type date),
+				    #"Inserted Year" = Table.AddColumn(#"Inserted Date", "Year", each Date.Year([Date]), Int64.Type)
+				in
+				    #"Inserted Year"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

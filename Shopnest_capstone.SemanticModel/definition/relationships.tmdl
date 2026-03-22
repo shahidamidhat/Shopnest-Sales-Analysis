@@ -1,0 +1,67 @@
+relationship AutoDetected_76d22d11-6c78-4e50-999b-0840ba310635
+	fromColumn: Nexusgoods_order_items_dataset.product_id
+	toColumn: Nexusgoods_products_dataset.product_id
+
+relationship AutoDetected_0ab66654-6d44-43ab-ae12-e1d8afcc374d
+	fromColumn: Nexusgoods_order_items_dataset.seller_id
+	toColumn: Nexusgoods_sellers_dataset.seller_id
+
+relationship 1e46a719-bdfe-f705-6311-42fa209eda34
+	crossFilteringBehavior: bothDirections
+	fromColumn: Nexusgoods_products_dataset.product_category_name
+	toColumn: product_category_name_translation.product_category_name
+
+relationship 72b3754b-1e56-4ecb-f9f7-4dc4b0aa1617
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Nexusgoods_order_items_dataset.order_id
+	toColumn: Nexusgoods_order_reviews_dataset.order_id
+
+relationship 5ccbda63-b5a1-491d-bedb-1c8ec120b6e5
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Nexusgoods_orders_dataset (1)'.order_purchase_timestamp
+	toColumn: LocalDateTable_8e81798b-a074-4287-a691-796a52527110.Date
+
+relationship 9007cbca-4081-4698-a874-9da4145d7464
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Nexusgoods_orders_dataset (1)'.'End of Month'
+	toColumn: LocalDateTable_f145300a-43e9-4cb6-9118-c99b3f23974d.Date
+
+relationship 03cba4a5-9eed-4ca7-bebe-d2b15400645f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: 'Nexusgoods_orders_dataset (1)'.Date
+	toColumn: LocalDateTable_ec9ffb99-ea83-482e-be8b-61a23c5dc59a.Date
+
+relationship AutoDetected_16ad1570-082f-47a9-aee2-c0f22e96319c
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Nexusgoods_orders_dataset (1)'.customer_id
+	toColumn: Nexusgoods_customers_dataset.customer_id
+
+relationship AutoDetected_63e5278c-601a-43a2-8d17-baf44cf096f2
+	crossFilteringBehavior: bothDirections
+	fromColumn: Nexusgoods_order_items_dataset.order_id
+	toColumn: 'Nexusgoods_orders_dataset (1)'.order_id
+
+relationship AutoDetected_d0f05815-186f-404c-9dbc-2dc7989669a3
+	fromColumn: Nexusgoods_order_payments_dataset.order_id
+	toColumn: 'Nexusgoods_orders_dataset (1)'.order_id
+
+relationship AutoDetected_2d9a809e-63f5-4e07-9fdd-1bafcef6c5d3
+	isActive: false
+	fromColumn: Nexusgoods_order_reviews_dataset.order_id
+	toColumn: 'Nexusgoods_orders_dataset (1)'.order_id
+
+relationship ff6fa8c9-a08b-4fba-5695-c4187583b450
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Nexusgoods_customers_dataset.customer_state
+	toColumn: Nexusgood_geolocation_dataset.geolocation_state
+
+relationship 4ab7f9db-ef7d-2f09-692b-4c8df3dd9f15
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Nexusgoods_customers_dataset.customer_city
+	toColumn: Nexusgood_geolocation_dataset.geolocation_city
+

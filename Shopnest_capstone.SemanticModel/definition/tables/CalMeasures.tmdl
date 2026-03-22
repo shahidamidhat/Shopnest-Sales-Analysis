@@ -1,0 +1,35 @@
+table CalMeasures
+	lineageTag: 1f36e587-93b4-4861-8b7d-0e26d22f1d66
+
+	measure 'Total Sales' = SUM(Nexusgoods_order_items_dataset[price])
+		lineageTag: 900b8a5b-9789-4cda-9b5a-f36ec9ce7fc3
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Late Deliveries' = CALCULATE(COUNTROWS('Nexusgoods_orders_dataset (1)'),'Nexusgoods_orders_dataset (1)'[if_late_delivery]= "Yes")
+		formatString: 0
+		lineageTag: 724bff40-0db0-41ee-a33c-93a95122740e
+
+	measure 'Total Orders' = COUNT('Nexusgoods_orders_dataset (1)'[order_id])
+		formatString: 0
+		lineageTag: ffc6136d-de5a-466d-9dc4-54606602299f
+
+	measure Early_Deliveries = CALCULATE(COUNTROWS('Nexusgoods_orders_dataset (1)'),'Nexusgoods_orders_dataset (1)'[if_late_delivery]="No")
+		formatString: 0
+		lineageTag: db2cb8f4-7d3a-4ae1-aebb-be041a03fb41
+
+	column Column
+		formatString: 0
+		lineageTag: b8551781-4f53-4b8c-9653-e6f9e21ffde4
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Column]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition CalMeasures = calculated
+		mode: import
+		source = Row("Column", BLANK())
+
+	annotation PBI_Id = 591c02b9caf5436280cc2ff2c00d8fdd
+

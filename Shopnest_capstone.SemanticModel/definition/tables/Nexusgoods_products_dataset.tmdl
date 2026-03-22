@@ -1,0 +1,94 @@
+table Nexusgoods_products_dataset
+	lineageTag: 8da8c7fc-6c33-4524-8f9e-90ee9df86587
+
+	column product_id
+		dataType: string
+		lineageTag: cb817114-6f4b-4648-be2d-6ab92edce303
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category_name
+		dataType: string
+		lineageTag: 32d7d8d4-6514-4d68-af20-de49ab34f2b9
+		summarizeBy: none
+		sourceColumn: product_category_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: f3142de9-bdf5-4a1d-bd85-768d1321cc9c
+		summarizeBy: sum
+		sourceColumn: product_name_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_description_lenght
+		dataType: int64
+		formatString: 0
+		lineageTag: cafdc782-aeaa-4e34-bd08-f3378d52403c
+		summarizeBy: sum
+		sourceColumn: product_description_lenght
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_photos_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: bbc937b0-348d-4242-8b75-4d8de9d270d2
+		summarizeBy: sum
+		sourceColumn: product_photos_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_weight_g
+		dataType: int64
+		formatString: 0
+		lineageTag: 8d2109d9-e645-45d0-8d2c-55d1dbc59881
+		summarizeBy: sum
+		sourceColumn: product_weight_g
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_length_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 4a0561f1-dba3-4607-bfc0-9119d600e238
+		summarizeBy: sum
+		sourceColumn: product_length_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_height_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 32d5d2bc-190b-43ef-939c-a7ecb8120f2c
+		summarizeBy: sum
+		sourceColumn: product_height_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_width_cm
+		dataType: int64
+		formatString: 0
+		lineageTag: 0cc626bf-436b-49d7-85f2-21453b7f8dec
+		summarizeBy: sum
+		sourceColumn: product_width_cm
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Nexusgoods_products_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Irfan\Desktop\Shahida\Nexusgoods store capstone\Nexusgoods_products_dataset.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"product_id", type text}, {"product_category_name", type text}, {"product_name_lenght", Int64.Type}, {"product_description_lenght", Int64.Type}, {"product_photos_qty", Int64.Type}, {"product_weight_g", Int64.Type}, {"product_length_cm", Int64.Type}, {"product_height_cm", Int64.Type}, {"product_width_cm", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

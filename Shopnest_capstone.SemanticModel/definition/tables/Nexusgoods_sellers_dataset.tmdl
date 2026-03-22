@@ -1,0 +1,48 @@
+table Nexusgoods_sellers_dataset
+	lineageTag: 107a2ab0-856e-4cbb-83a1-eb7f6f61bcc2
+
+	column seller_id
+		dataType: string
+		lineageTag: 73479e35-bf73-48db-bb0e-d209bb0085a3
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_zip_code_prefix
+		dataType: int64
+		formatString: 0
+		lineageTag: 5a2059a5-19b1-40a7-ba3a-99b292103d94
+		summarizeBy: none
+		sourceColumn: seller_zip_code_prefix
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_city
+		dataType: string
+		lineageTag: 964f1a5c-eecb-4e75-b407-657c6a1c557b
+		summarizeBy: none
+		sourceColumn: seller_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_state
+		dataType: string
+		lineageTag: 8312c8a5-55e8-44bf-9f9a-bf72e865e727
+		summarizeBy: none
+		sourceColumn: seller_state
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Nexusgoods_sellers_dataset = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\Irfan\Desktop\Shahida\Nexusgoods store capstone\Nexusgoods_sellers_dataset.csv"),[Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"seller_id", type text}, {"seller_zip_code_prefix", Int64.Type}, {"seller_city", type text}, {"seller_state", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
