@@ -47,7 +47,3 @@ Feature engineering techniques were applied to derive meaningful variables such 
 ## 🚀 Outcome
 The analysis provided actionable insights to improve **inventory planning, marketing strategies, and operational efficiency**, enabling more data-driven business decisions.
 
----
-
-## 🔗 One-line Summary
-> End-to-end e-commerce sales analysis project to uncover revenue trends, customer behavior, and operational insights using SQL, Python, and Power BI.
